@@ -1,0 +1,89 @@
+doctype html
+html
+  head
+    title Adam Yee - Personal Website
+
+    meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=0.6")
+    meta(name="description" content="My own little web presence. About me, resume and code stuff.")
+    
+    script(src='javascripts/bower_components/webcomponentsjs/webcomponents.js')
+    link(rel='import' href='javascripts/bower_components/polymer/polymer.html')
+    link(rel='import' href='javascripts/bower_components/core-header-panel/core-header-panel.html')
+    link(rel='import' href='javascripts/bower_components/core-animated-pages/core-animated-pages.html')
+    link(rel='import' href='javascripts/bower_components/core-animation/core-animation.html')
+    link(rel='import' href='javascripts/bower_components/core-ajax/core-ajax.html')
+    link(rel='import' href='javascripts/bower_components/paper-tabs/paper-tabs.html')
+    link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
+    link(rel='import' href='javascripts/bower_components/flatiron-director-0.5.0/flatiron-director.html')
+    link(rel='stylesheet' href='stylesheets/index.css')
+
+  body(unresolved fullbleed layout vertical)
+    template#template(is='auto-binding')
+      flatiron-director(route='{{route}}' autoHash on-director-route='{{onRoute}}')
+
+      template(repeat="{{url in urls}}")
+        core-ajax(id='{{ "ajax-" + url }}' url='{{url}}' on-core-response='{{parseResponse}}')
+
+      core-header-panel(mode='seamed' flex)
+        div.core-header(horizontal layout)
+          paper-tabs#tabs(
+            valueattr='hash'
+            selected='{{route}}'
+            class="{{ {'expand': route === 'about'} | tokenList }}"
+            flex noink noslide
+              )
+            paper-tab(hash='about') About
+            paper-tab(hash='code') Code
+            paper-tab(hash='contact') Contact
+            paper-tab(hash='resume') Resume
+          span#spacer(class="{{ {'expand': route === 'about'} | tokenList }}")
+          div#marque(
+            class="{{ {'slide': route === 'about'} | tokenList }}"
+              )
+            a(href='#about') Adam Yee
+            div
+              span(block) Front End Developer
+              span(block) Xero
+        core-animated-pages(valueattr='hash' selected='{{route}}' transitions='cross-fade')
+          div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}'): div.fade-content(cross-fade)
+          div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}'): div.fade-content(cross-fade)
+          div#contact-page(class='page' hash='contact' hidden?='{{route !== "contact"}}')
+            div.fade-content(cross-fade horizontal layout)
+              span(style="width: 5%;")
+              a#linkedin.logo-link(href="http://www.linkedin.com/pub/adam-yee/1425/7b0/" target="_blank")
+                img(src='../images/linkedin-logo.png')
+              span(style="width: 8%;")
+              a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
+                img(src='../images/github_512_black.png')
+          div#resume-page(
+            class='page'
+            hash='resume'
+            hidden?='{{route !== "resume"}}'
+            on-click='{{drawerHandler}}')
+            div.fade-content(cross-fade)
+
+    script(src='javascripts/bower_components/jquery/jquery.js')
+    script.
+      var template = document.querySelector('template[is="auto-binding"]');
+      template.closedSections = 5;
+      template.urls = [
+        'about',
+        'code',
+        'resume'
+      ];
+      template.addEventListener('template-bound', function(e) {
+        // Use URL hash for initial route. Otherwise, use the first page.
+        this.route = this.route || 'about';
+        this.onRoute(null, this.route);
+      });
+      template.parseResponse = function (e, object, element) {
+        this.injectBoundHTML(object.response, this.$[this.route + '-page'].querySelector('.fade-content'));
+      };
+      template.onRoute = function (e, route) {
+        if(!this.$) {
+          return;
+        }
+        this.$['ajax-' + route] && this.$['ajax-' + route].go();
+        template.showhide = true;
+      };

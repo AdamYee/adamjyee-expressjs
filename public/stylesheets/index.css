@@ -1,0 +1,196 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+body, h3 {
+  font-weight: 100;
+}
+.core-header {
+  padding: 0 15%;
+  background-color: #03A9F4;
+  color: white;
+}
+.link {
+  color: #03A9F4;
+  text-decoration: none;
+}
+.link:hover {
+  color: #ff7b29;
+}
+.fade-content {
+  margin-bottom: 10%;
+}
+.fade-content {
+
+}
+#marque {
+  font-size: 27px;
+  letter-spacing: -1px;
+  position: absolute;
+  left: 65%;
+  padding-top: 4px;
+  -webkit-transition: left 0.35s, padding 0.35s;
+  transition: left 0.35s, padding 0.35s;
+}
+#marque > a {
+  text-decoration: none;
+  color: white;
+}
+#marque.slide {
+  left: 0;
+  padding-left: 15%;
+}
+#marque > div {
+  padding-left: 7px;
+  font-size: 13px;
+  letter-spacing: 0px;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity 0.6s 0.3s;
+  transition: opacity 0.6s 0.3s;
+}
+#marque.slide > div {
+  visibility: visible;
+  opacity: 1;
+}
+#spacer {
+  width: 40%;
+  -webkit-transition: width 0.6s;
+  transition: width 0.6s;
+}
+#spacer.expand {
+  width: 30%;
+}
+#tabs {
+  -webkit-transition: height 0.6s, margin-top 0.6s;
+  transition: height 0.6s, margin-top 0.6s;
+}
+#tabs.expand {
+  height: 55px;
+  margin-top: 80px;
+}
+paper-tab::shadow :hover {
+  cursor: pointer;
+  opacity: 1;
+}
+paper-tabs::shadow #selectionBar {
+  height: 4px;
+}
+core-header-panel::shadow #mainContainer {
+  padding: 20px 15%;
+  font-size: 14px;
+  color: #444;
+}
+#contact-page {
+  margin-top: 3%;
+}
+#linkedin {
+  width: 100px;
+  height: 100px;
+}
+#github {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+}
+.logo-link {
+  display: inline-block;
+}
+.logo-link > img {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  display: block;
+}
+.logo-link > img:hover {
+  opacity: 0.7;
+}
+
+/*** About ***/
+#about-page #interests {
+  margin-top: 30px;
+}
+
+/*** Code ***/
+#code-page ul {
+  padding-left: 20px;
+}
+#code-page span.created {
+  color: #999;
+  font-size: 12px;
+}
+#code-page li {
+  margin-bottom: 15px;
+}
+#code-page p {
+  margin: 5px 0;
+}
+
+/*** Resume ***/
+#resume-page {
+  padding-top: 17px;
+}
+#resume-page .header {
+  cursor: pointer;
+  margin: 0 0 -1px 0;
+  border-bottom: 1px solid #ccc;
+}
+#resume-page .header h2 {
+  display: inline-block;
+  font-weight: 100;
+  -webkit-transition: color 300ms;
+  transition: color 300ms;
+}
+#resume-page >div {
+  border-top: 1px solid #ccc;
+}
+#resume-page .header:hover h2 {
+  color: #03A9F4;
+}
+#resume-page .arrow {
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  margin: 0 10px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#resume-page .arrow.rotate {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+#resume-page .project {
+  margin: 15px 15px 25px 15px;
+}
+#resume-page .job-title,
+#resume-page .tech {
+  font-size: 12px;
+}
+#resume-page h3 {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 100;
+}
+#resume-page .project .what {
+  margin-bottom: 10px;
+}
+#resume-page #showhide {
+  background: #03A9F4;
+  color: white;
+  position: fixed;
+  right: 15%;
+  top: 103px;
+  font-size: 10px;
+}
+#showhide:hover {
+}
+#resume-page .section {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding-left: 7px;
+  display: none;
+}
+#resume-page p.skills {
+  margin-left: 15px;
+}

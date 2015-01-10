@@ -1,0 +1,39 @@
+body {
+  padding-left: 30px;
+}
+h2 {
+  margin-bottom: 0px;
+}
+#title {
+  margin: 25px 0px 0px 20px;
+  line-height: 33px;
+}
+#loading-indicator {
+  display: none;
+}
+#jquery-results {
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 471px;
+  height: 451px;
+}
+.header {
+  margin-bottom: 10px;
+}
+.header > h2,
+.header > div {
+  float: left;
+}
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.nav {
+  margin-top: 10px;
+}
+.tab-content {
+  margin-top: 20px;
+}

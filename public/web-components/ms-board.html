@@ -1,0 +1,169 @@
+<link rel="import" href="../javascripts/bower_components/polymer/polymer.html">
+<link rel="import" href="./ms-cell.html">
+<script type="text/javascript" src="../javascripts/grid.js"></script>
+
+<polymer-element
+  name="ms-board"
+  attributes="rows columns mines"
+  on-explosion="{{createExplosion}}"
+  on-flagged="{{flaggedHandler}}"
+  on-check-win="{{checkWin}}">
+  <template>
+    <style>
+    #board {
+      position: relative;
+      margin-left: 50px;
+      margin-top: 20px;
+      display: inline-block;
+    }
+    #game-end {
+      z-index: 100;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    #game-end > span {
+      font-size: 17px;
+      background: #fff;
+      border-radius: 5px;
+      border: 2px solid;
+      padding: 0 5px;
+      box-shadow: 0 0 4px 0px;
+    }
+    #game-end.show {
+      -webkit-animation: show 1.2s;
+      -moz-animation: show 1.2s;
+      opacity: 1;
+    }
+    @-webkit-keyframes show {
+      0% {opacity: 0;}
+      100% {opacity: 100;}
+    }
+    @-moz-keyframes show {
+      0% {opacity: 0;}
+      100% {opacity: 100;}
+    }
+    </style>
+    <div id="board">
+      <template repeat="{{ row in grid.cells }}">
+        <div horizontal layout>
+          <template repeat="{{ cell in row }}">
+            <ms-cell
+              id="{{cell.id}}"
+              cell={{cell}}
+              on-reveal-neighbors="{{revealNeighbors}}">
+            </ms-cell>
+          </template>
+        </div>
+      </template>
+      <div
+        id="game-end"
+        class="{{ {'show': doneExploding || win} | tokenList }}"
+        hidden?="{{!gameOver}}"
+        horizontal center-justified layout center>
+        <span style="color: {{win ? 'green' : 'red'}}">{{gameEndMessage}}</span>
+      </div>
+    </div>
+  </template>
+  <script>
+    'use strict';
+    var Grid = MSPolymer.Grid;
+    Polymer({
+      created: function () {
+        this.gameOver = false;
+        this.win = false;
+        this.doneExploding = false;
+        this.flagCount = 0;
+        this.grid = null; // Grid object
+      },
+      /**
+       * IMPORTANT: Attributes configured via an element e.g. <x-foo name="bar"></x-foo>
+       * are not available in the `created`lifecycle method. They first become available
+       * in the `ready` lifecycle method.
+       */
+      ready: function () {
+        this.grid = new Grid(this.rows, this.columns, this.mines);
+      },
+      computed: {
+        'gameEndMessage': 'win ? "YOU WIN" : "GAME OVER"'
+      },
+      flaggedHandler: function (Event, object, element) {
+        this.flagCount += object; // object is 1 or -1
+        this.checkWin();
+      },
+      checkWin: function () {
+        this.win = this.grid.hasWon();
+        if(this.win) {
+          this.gameOver = true;
+        }
+      },
+      /**
+       * Recursively self reveals cells as 0 risk cells are revealed.
+       * Recursion is oddly handled through animation. See `propagate` on ms-cell.html.
+       */
+      revealNeighbors: function (Event, object, element) {
+        var position = element.id.split('_').slice(-2); // get grid position from id
+        var row = parseInt(position[0]);
+        var col = parseInt(position[1]);
+        this.grid.forEachSurroudingCell(row, col)(function (r, c) {
+          /**
+           * Common Polymer gotcha:
+           * Automatic node finding only works 1 level deep in the shadow DOM tree.
+           * Anything deeper can be accessed by using `querySelector` on an
+           * automatically found node.
+           */
+          var neighbor = this.$.board.querySelector('#cid_' + r + '_' + c);
+          if (!neighbor.cell.flagged) {
+            neighbor.revealed = true; // recursion via data-binding
+          }
+        }, this);
+      },
+      /**
+       * As soon as any mine explodes, this method fires off the rest
+       * to make it a board-wide explosion.
+       */
+      createExplosion: function (Event, object, element) {
+        this.gameOver = true;
+
+        var mineCellIds = this.grid.mineArray.map(function(id) { return '#'+id; }).join(',');
+        var mines = Array.prototype.slice.call( this.$.board.querySelectorAll(mineCellIds) );
+        mines = shuffleArray(mines); // shuffle the mines for a random explosion effect
+
+        // know when to show the game over message - after we're done exploding
+        var explodedCount = 0;
+        this.addEventListener('webkitAnimationEnd', function (e) {
+          if (e.animationName === 'explode') {
+            explodedCount++;
+            if(explodedCount === this.mines - this.flagCount) {
+              this.doneExploding = true
+            }
+          }
+        }.bind(this));
+
+        mines.forEach(function(cell, i) {
+          setTimeout(function () {
+            if(!cell.cell.flagged) {
+              cell.revealed = true; // explode unflagged mines
+            }
+          }, i%2===0 ? i*15 : i*12);
+        });
+      }
+    });
+    
+    /*
+    Utils
+     */
+    function shuffleArray(array) {
+      for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+      }
+      return array;
+    }
+  </script>
+</polymer-element>
