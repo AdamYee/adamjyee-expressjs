@@ -105,9 +105,10 @@ core-header-panel::shadow #mainContainer {
   max-height: 100%;
   margin: auto;
   display: block;
+  opacity: 0.7;
 }
 .logo-link > img:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 /*** About ***/
