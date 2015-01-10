@@ -29,8 +29,6 @@ router.get('/', function (req, res) {
       throw err;
     }
   });
-  // stub data
-  // res.json([{"id": 57, "message": "r23r23r23"}, {"id": 54, "message": "wefoijweof aowiejfwef"}]);
 });
 
 // Update
