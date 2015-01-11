@@ -17,6 +17,7 @@ html
     link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
     link(rel='import' href='javascripts/bower_components/flatiron-director-0.5.0/flatiron-director.html')
     link(rel='stylesheet' href='stylesheets/index.css')
+    script(src='javascripts/bower_components/jquery/jquery.js')
 
   body(unresolved fullbleed layout vertical)
     template#template(is='auto-binding')
@@ -62,8 +63,43 @@ html
             hidden?='{{route !== "resume"}}'
             on-click='{{drawerHandler}}')
             div.fade-content(cross-fade)
+      script.
+        $(function () {
+          $('#resume-page').off();
+          $('#resume-page').on('click', 'div.header', function() {
+            var $header = $(this);
+            $header.next().slideToggle(function(){
+              if($header.find('.arrow').hasClass('rotate')) {
+                template.closedSections -= 1;
+              } else {
+                template.closedSections += 1;
+              }
+              if(template.closedSections === 5) {
+                template.showhide = true;
+              } else if(!template.closedSections) {
+                template.showhide = false;
+              }
+            });
+            $(this).find('.arrow').toggleClass('rotate');
+          });
+          $('#resume-page').on('click', '#showhide', function() {
+            var sections = $('div.section');
+            var filtered;
+            if(template.showhide) {
+              filtered = sections.filter(':hidden')
+              filtered.slideDown();
+            } else {
+              filtered = sections.filter(':visible')
+              filtered.slideUp();
+            }
+            filtered.each(function() {
+              $(this.previousSibling).find('.arrow').toggleClass('rotate');
+            })
+            template.closedSections = template.showhide ? 0 : 5
+            template.showhide = !template.showhide;
+          });
+        });
 
-    script(src='javascripts/bower_components/jquery/jquery.js')
     script.
       var template = document.querySelector('template[is="auto-binding"]');
       template.closedSections = 5;
