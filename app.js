@@ -9,6 +9,8 @@ var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var messages = require('./routes/messages');
 
+var env = process.argv.slice(2)[0];
+
 var app = express();
 
 // view engine setup
@@ -24,7 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // database
-mongoose.connect('mongodb://localhost/adamjyee');
+if(env === 'dev') {
+  mongoose.connect('mongodb://localhost/adamjyee');
+} else {
+  mongoose.connect('mongodb://nodejitsu:b7778d914cbf159f76169c3f9b0ab188@troup.mongohq.com:10046/nodejitsudb1880548233');
+}
 
 app.use('/', routes);
 app.use('/messages', messages);

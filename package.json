@@ -1,14 +1,14 @@
 {
   "name": "express-adamjyee",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Adam Yee",
     "email": "adamjyee@gmail.com"
   },
   "description": "Personal website",
   "scripts": {
-    "predeploy": "bower install",
-    "start": "node app.js"
+    "start": "node app.js",
+    "predeploy": "bower update"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
