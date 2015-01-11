@@ -74,7 +74,7 @@ html
               } else {
                 template.closedSections += 1;
               }
-              if(template.closedSections === 5) {
+              if(template.closedSections === 4) {
                 template.showhide = true;
               } else if(!template.closedSections) {
                 template.showhide = false;
@@ -102,7 +102,7 @@ html
 
     script.
       var template = document.querySelector('template[is="auto-binding"]');
-      template.closedSections = 5;
+      template.closedSections = 4;
       template.urls = [
         'about',
         'code',
