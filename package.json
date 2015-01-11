@@ -1,12 +1,13 @@
 {
   "name": "express-adamjyee",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": {
     "name": "Adam Yee",
     "email": "adamjyee@gmail.com"
   },
   "description": "Personal website",
   "scripts": {
+    "predeploy": "bower install",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -30,5 +31,8 @@
   "domains": [
     "adamjyee.com",
     "www.adamjyee.com"
-  ]
+  ],
+  "engines": {
+    "node": "0.10.x"
+  }
 }
