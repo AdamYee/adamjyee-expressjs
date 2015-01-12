@@ -15,6 +15,7 @@ html
     link(rel='import' href='javascripts/bower_components/core-ajax/core-ajax.html')
     link(rel='import' href='javascripts/bower_components/paper-tabs/paper-tabs.html')
     link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
+    link(rel='import' href='javascripts/bower_components/paper-spinner/paper-spinner.html')
     link(rel='import' href='javascripts/bower_components/flatiron-director-0.5.0/flatiron-director.html')
     link(rel='stylesheet' href='stylesheets/index.css')
     script(src='javascripts/bower_components/jquery/jquery.js')
@@ -61,8 +62,9 @@ html
                 img(src='../images/github_512_black.png')
           div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
             div.fade-content(cross-fade)
-        #loading-icon(horizontal center-justified layout hidden?='{{!loading}}')
-          span loading...
+        #spinner-container(horizontal center-justified layout)
+          paper-spinner.green(active?='{{loading}}' role='progress-bar')
+
 
       script.
         /**
