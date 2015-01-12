@@ -13,7 +13,9 @@ router.get('/code', function (req, res) {
   res.send(jade.renderFile('views/code.jade'));
 });
 router.get('/resume', function (req, res) {
-  res.send(jade.renderFile('views/resume.jade'));
+  setTimeout(function() {
+    res.send(jade.renderFile('views/resume.jade'));
+  }, 1000);
 });
 
 router.get('/code/minesweeper', function (req, res) {

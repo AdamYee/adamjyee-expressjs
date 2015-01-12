@@ -23,6 +23,15 @@ body, h3 {
 .fade-content {
 
 }
+#loading-icon {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  padding-top: 25%
+}
 #marque {
   font-size: 27px;
   letter-spacing: -1px;

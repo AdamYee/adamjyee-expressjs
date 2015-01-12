@@ -61,6 +61,8 @@ html
                 img(src='../images/github_512_black.png')
           div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
             div.fade-content(cross-fade)
+        #loading-icon(horizontal center-justified layout hidden?='{{!loading}}')
+          span loading...
 
       script.
         /**
@@ -106,6 +108,7 @@ html
       /**
        * template handlers
        */
+      var visitedRoutes = [];
       var template = document.querySelector('template[is="auto-binding"]');
       template.closedSections = 4;
       template.urls = [
@@ -113,18 +116,25 @@ html
         'code',
         'resume'
       ];
+
       template.addEventListener('template-bound', function(e) {
         // Use URL hash for initial route. Otherwise, use the first page.
         this.route = this.route || 'about';
         this.onRoute(null, this.route);
       });
       template.parseResponse = function (e, object, element) {
+        this.loading = false;
         this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
       };
       template.onRoute = function (e, route) {
         if(!this.$) {
           return;
         }
-        this.$['ajax-' + route] && this.$['ajax-' + route].go();
-        template.showhide = true;
+
+        if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
+          visitedRoutes.push(route);
+          this.loading = true;
+          this.showhide = true;
+          this.$['ajax-' + route] && this.$['ajax-' + route].go();
+        }
       };
