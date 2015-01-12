@@ -158,10 +158,13 @@ core-header-panel::shadow #mainContainer {
 #resume-page .arrow {
   display: inline-block;
   position: relative;
-  font-size: 20px;
-  margin: 0 10px;
+  bottom: 3px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+}
+#resume-page .arrow core-icon {
+  height: 30px;
+  width: 30px;
 }
 #resume-page .arrow.rotate {
   -webkit-transform: rotate(90deg);
