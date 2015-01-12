@@ -47,8 +47,10 @@ html
               span(block) Front End Developer
               span(block) Xero
         core-animated-pages(valueattr='hash' selected='{{route}}' transitions='cross-fade')
-          div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}'): div.fade-content(cross-fade)
-          div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}'): div.fade-content(cross-fade)
+          div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}')
+            div.fade-content(cross-fade)
+          div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}')
+            div.fade-content(cross-fade)
           div#contact-page(class='page' hash='contact' hidden?='{{route !== "contact"}}')
             div.fade-content(cross-fade horizontal layout)
               span(style="width: 5%;")
@@ -57,13 +59,13 @@ html
               span(style="width: 8%;")
               a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
                 img(src='../images/github_512_black.png')
-          div#resume-page(
-            class='page'
-            hash='resume'
-            hidden?='{{route !== "resume"}}'
-            on-click='{{drawerHandler}}')
+          div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
             div.fade-content(cross-fade)
+
       script.
+        /**
+         * JQuery resume click handlers
+         */
         $(function () {
           $('#resume-page').off();
           $('#resume-page').on('click', 'div.header', function() {
@@ -101,6 +103,9 @@ html
         });
 
     script.
+      /**
+       * template handlers
+       */
       var template = document.querySelector('template[is="auto-binding"]');
       template.closedSections = 4;
       template.urls = [
@@ -114,7 +119,7 @@ html
         this.onRoute(null, this.route);
       });
       template.parseResponse = function (e, object, element) {
-        this.injectBoundHTML(object.response, this.$[this.route + '-page'].querySelector('.fade-content'));
+        this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
       };
       template.onRoute = function (e, route) {
         if(!this.$) {
