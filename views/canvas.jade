@@ -1,24 +1,26 @@
-doctype html
-html
-  head
-    meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=0.6")
-    meta(name="description" content="Playing with canvas.")
-    title AY - Canvas Tag
-    style.
-      code.htmltag {
-        padding: 2px 4px;
-        color: #d14;
-        white-space: nowrap;
-        background-color: #f7f7f9;
-        border: 1px solid #e1e1e8;
-        font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-        font-size: 12px;
-        font-weight: normal;
-      }
-      #shapes {
-        margin-left: 100px;
-      }
+extends ./analytics-wrapper.jade
+
+block head
+  meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+  meta(name="viewport" content="width=device-width, initial-scale=0.6")
+  meta(name="description" content="Playing with canvas.")
+  title AY - Canvas Tag
+  style.
+    code.htmltag {
+      padding: 2px 4px;
+      color: #d14;
+      white-space: nowrap;
+      background-color: #f7f7f9;
+      border: 1px solid #e1e1e8;
+      font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+      font-size: 12px;
+      font-weight: normal;
+    }
+    #shapes {
+      margin-left: 100px;
+    }
+
+block content
   body
     h2#title: a(href="/#code") Adam Yee
     h3 Playing with

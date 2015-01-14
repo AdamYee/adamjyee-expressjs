@@ -1,19 +1,21 @@
-doctype html
-html
-  head
-    meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=0.6")
-    meta(name="description" content="Consuming a Yelp API to experimenting with various frameworks.")
-    title AY - Yelp Search/title
-    link(rel="stylesheet" href="/javascripts/bower_components/bootstrap/dist/css/bootstrap.css")
-    link(rel="stylesheet" href="/stylesheets/yelp-app.css")
-    
-    script(src="/javascripts/bower_components/jquery/jquery.js")
-    script(src="/javascripts/bower_components/angular/angular.js")
-    script(src="/javascripts/yelp-app/angular-yelp.js")
-    script(src="/javascripts/yelp-app/search.js")
-    script(src="/javascripts/bower_components/angular-resource/angular-resource.js")
-    script(src="/javascripts/bower_components/bootstrap/dist/js/bootstrap.js")
+extends ./analytics-wrapper.jade
+
+block head
+  meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+  meta(name="viewport" content="width=device-width, initial-scale=0.6")
+  meta(name="description" content="Consuming a Yelp API to experimenting with various frameworks.")
+  title AY - Yelp Search/title
+  link(rel="stylesheet" href="/javascripts/bower_components/bootstrap/dist/css/bootstrap.css")
+  link(rel="stylesheet" href="/stylesheets/yelp-app.css")
+  
+  script(src="/javascripts/bower_components/jquery/jquery.js")
+  script(src="/javascripts/bower_components/angular/angular.js")
+  script(src="/javascripts/yelp-app/angular-yelp.js")
+  script(src="/javascripts/yelp-app/search.js")
+  script(src="/javascripts/bower_components/angular-resource/angular-resource.js")
+  script(src="/javascripts/bower_components/bootstrap/dist/js/bootstrap.js")
+
+block content
   body
     div.header.group
       h2: a(href="/#code") Adam Yee

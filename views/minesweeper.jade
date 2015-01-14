@@ -1,11 +1,13 @@
-doctype html
-html
-  head
-    title= 'Polymer Mine Sweeper'
-    script(src='/javascripts/bower_components/webcomponentsjs/webcomponents.js')
-    link(rel='import' href='/javascripts/bower_components/polymer/polymer.html')
-    link(rel='import' href='/web-components/ms-board.html')
-    link(rel='stylesheet' href='/stylesheets/pms.css')
+extends ./analytics-wrapper.jade
+
+block head
+  title= 'Polymer Mine Sweeper'
+  script(src='/javascripts/bower_components/webcomponentsjs/webcomponents.js')
+  link(rel='import' href='/javascripts/bower_components/polymer/polymer.html')
+  link(rel='import' href='/web-components/ms-board.html')
+  link(rel='stylesheet' href='/stylesheets/pms.css')
+
+block content
   body
     a(href='/#code') Back
     template#game-template(is='auto-binding')

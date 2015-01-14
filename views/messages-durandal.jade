@@ -1,11 +1,13 @@
-doctype html
-html
-  head
-    meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=0.6")
-    meta(name="description" content="Using Durandal and Knockout to access messages through an REST interface.")
-    title AY - Durandal Messages
-    link(rel="stylesheet" href="/javascripts/bower_components/bootstrap/dist/css/bootstrap.css")
+extends ./analytics-wrapper.jade
+
+block head
+  meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
+  meta(name="viewport" content="width=device-width, initial-scale=0.6")
+  meta(name="description" content="Using Durandal and Knockout to access messages through an REST interface.")
+  title AY - Durandal Messages
+  link(rel="stylesheet" href="/javascripts/bower_components/bootstrap/dist/css/bootstrap.css")
+
+block content
   body(style='margin: 20px;')
     h3#title: a(href="/#code") Adam Yee
     | (in progress)
