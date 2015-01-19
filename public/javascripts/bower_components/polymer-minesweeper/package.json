@@ -8,7 +8,9 @@
     "email": "adamjyee@gmail.com"
   }],
   "scripts": {
-    "serve": "node node_modules/http-server/bin/http-server"
+    "serve": "node node_modules/http-server/bin/http-server",
+    "prestart": "cp grid.js ms-play.html ms-board.html ms-cell.html demo",
+    "start": "npm run serve"
   },
   "repository": {
   },

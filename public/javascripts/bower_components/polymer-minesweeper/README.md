@@ -1,9 +1,23 @@
 PolymerMineSweeper
 ==================
 
-Mine Sweeper made with Polymer
+Mine Sweeper made with Polymer built to be used as a bower package.
 
-* `❯ npm install`
-* `❯ bower install`
-* `❯ npm run serve`
-* [http://localhost:8080](http://localhost:8080)
+```
+bower install --save https://github.com/AdamYee/PolymerMineSweeper.git
+```
+
+```html
+<link rel="import" href="bower_components/polymer-minesweeper/ms-play.html">
+<ms-play></ms-play>
+```
+
+Local Demo
+----------
+
+```bash
+bower install
+npm install
+npm start
+```
+[http://localhost:8080/demo](http://localhost:8080/demo)

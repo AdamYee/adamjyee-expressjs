@@ -1,6 +1,6 @@
 {
   "name": "polymer-minesweeper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "authors": [
     "Adam <adamjyee@gmail.com>"
   ],
@@ -17,13 +17,13 @@
     "polymer": "Polymer/polymer#~0.5.2"
   },
   "homepage": "https://github.com/AdamYee/PolymerMineSweeper",
-  "_release": "1.0.1",
+  "_release": "1.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.1",
-    "commit": "891fdaa28ae3fac293ab5b246fd926c228e51805"
+    "tag": "v1.0.2",
+    "commit": "831268e3c6133dbeb02eda4e029f3f7283551e4f"
   },
   "_source": "https://github.com/AdamYee/PolymerMineSweeper.git",
-  "_target": "v1.0.1",
+  "_target": "v1.0.2",
   "_originalSource": "https://github.com/AdamYee/PolymerMineSweeper.git"
 }
