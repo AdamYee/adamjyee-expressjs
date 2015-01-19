@@ -1,0 +1,29 @@
+{
+  "name": "polymer-minesweeper",
+  "version": "1.0.1",
+  "authors": [
+    "Adam <adamjyee@gmail.com>"
+  ],
+  "description": "mine sweeper polymer component",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.2"
+  },
+  "homepage": "https://github.com/AdamYee/PolymerMineSweeper",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "891fdaa28ae3fac293ab5b246fd926c228e51805"
+  },
+  "_source": "https://github.com/AdamYee/PolymerMineSweeper.git",
+  "_target": "v1.0.1",
+  "_originalSource": "https://github.com/AdamYee/PolymerMineSweeper.git"
+}

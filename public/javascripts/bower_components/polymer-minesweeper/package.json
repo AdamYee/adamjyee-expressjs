@@ -1,0 +1,21 @@
+{
+  "name": "polymer-minesweeper",
+  "version": "1.0.0",
+  "description": "using Polymer to build minesweeper the game",
+  "author": "AdamYee",
+  "contributors": [{
+    "name": "Adam Yee",
+    "email": "adamjyee@gmail.com"
+  }],
+  "scripts": {
+    "serve": "node node_modules/http-server/bin/http-server"
+  },
+  "repository": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "http-server": "0.7.4"
+  },
+  "license": "MIT"
+}
