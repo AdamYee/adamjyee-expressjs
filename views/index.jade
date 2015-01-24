@@ -21,123 +21,115 @@ block head
   script(src='javascripts/bower_components/jquery/jquery.js')
 
 block content
-  body(unresolved fullbleed layout vertical)
-    template#template(is='auto-binding')
-      flatiron-director(route='{{route}}' autoHash on-director-route='{{onRoute}}')
+  template#template(is='auto-binding')
+    flatiron-director(route='{{route}}' autoHash on-director-route='{{onRoute}}')
 
-      template(repeat="{{url in urls}}")
-        core-ajax(id='{{ "ajax-" + url }}' url='{{url}}' on-core-response='{{parseResponse}}')
+    template(repeat="{{url in urls}}")
+      core-ajax(id='{{ "ajax-" + url }}' url='{{url}}' on-core-response='{{parseResponse}}')
 
-      core-header-panel(mode='seamed' flex)
-        div.core-header(horizontal layout)
-          paper-tabs#tabs(
-            valueattr='hash'
-            selected='{{route}}'
-            class="{{ {'expand': route === 'about'} | tokenList }}"
-            flex noink noslide
-              )
-            paper-tab(hash='about') About
-            paper-tab(hash='code') Code
-            paper-tab(hash='contact') Contact
-            paper-tab(hash='resume') Resume
-          span#spacer(class="{{ {'expand': route === 'about'} | tokenList }}")
-          div#marque(
-            class="{{ {'slide': route === 'about'} | tokenList }}"
-              )
-            a(href='#about') Adam Yee
-            div
-              span(block) Front End Developer
-              span(block) Xero
-        core-animated-pages(valueattr='hash' selected='{{route}}' transitions='cross-fade')
-          div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}')
-            div.fade-content(cross-fade)
-          div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}')
-            div.fade-content(cross-fade)
-          div#contact-page(class='page' hash='contact' hidden?='{{route !== "contact"}}')
-            div.fade-content(cross-fade horizontal layout)
-              span(style="width: 5%;")
-              a#linkedin.logo-link(href="http://www.linkedin.com/pub/adam-yee/1425/7b0/" target="_blank")
-                img(src='../images/linkedin-logo.png')
-              span(style="width: 8%;")
-              a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
-                img(src='../images/github_512_black.png')
-          div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
-            div.fade-content(cross-fade)
-        #spinner-container(horizontal center-justified layout)
-          paper-spinner.green(active?='{{loading}}' role='progress-bar')
+    core-header-panel(mode='seamed' flex)
+      div.core-header(horizontal layout)
+        paper-tabs#tabs(
+          valueattr='hash'
+          selected='{{route}}'
+          class="{{ {'expand': route === 'about'} | tokenList }}"
+          flex noink noslide
+            )
+          paper-tab(hash='about') About
+          paper-tab(hash='code') Code
+          paper-tab(hash='contact') Contact
+          paper-tab(hash='resume') Resume
+        span#spacer(class="{{ {'expand': route === 'about'} | tokenList }}")
+        div#marque(
+          class="{{ {'slide': route === 'about'} | tokenList }}"
+            )
+          a(href='#about') Adam Yee
+          div
+            span(block) Front End Developer
+            span(block) Xero
+      core-animated-pages(valueattr='hash' selected='{{route}}' transitions='cross-fade')
+        div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}')
+          div.fade-content(cross-fade)
+        div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}')
+          div.fade-content(cross-fade)
+        div#contact-page(class='page' hash='contact' hidden?='{{route !== "contact"}}')
+          div.fade-content(cross-fade horizontal layout)
+            span(style="width: 5%;")
+            a#linkedin.logo-link(href="http://www.linkedin.com/pub/adam-yee/1425/7b0/" target="_blank")
+              img(src='../images/linkedin-logo.png')
+            span(style="width: 8%;")
+            a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
+              img(src='../images/github_512_black.png')
+        div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
+          div.fade-content(cross-fade)
+      #spinner-container(horizontal center-justified layout)
+        paper-spinner.green(active?='{{loading}}' role='progress-bar')
 
+  script.
+    /**
+     * template handlers
+     */
+    var visitedRoutes = [];
+    var template = document.querySelector('template[is="auto-binding"]');
+    template.closedSections = 4;
+    template.urls = [
+      'about',
+      'code',
+      'resume'
+    ];
 
-      script.
-        /**
-         * JQuery resume click handlers
-         */
-        $(function () {
-          $('#resume-page').off();
-          $('#resume-page').on('click', 'div.header', function() {
-            var $header = $(this);
-            $header.next().slideToggle(function(){
-              if($header.find('.arrow').hasClass('rotate')) {
-                template.closedSections -= 1;
-              } else {
-                template.closedSections += 1;
-              }
-              if(template.closedSections === 4) {
-                template.showhide = true;
-              } else if(!template.closedSections) {
-                template.showhide = false;
-              }
-            });
-            $(this).find('.arrow').toggleClass('rotate');
-          });
-          $('#resume-page').on('click', '#showhide', function() {
-            var sections = $('div.section');
-            var filtered;
-            if(template.showhide) {
-              filtered = sections.filter(':hidden')
-              filtered.slideDown();
-            } else {
-              filtered = sections.filter(':visible')
-              filtered.slideUp();
-            }
-            filtered.each(function() {
-              $(this.previousSibling).find('.arrow').toggleClass('rotate');
-            })
-            template.closedSections = template.showhide ? 0 : 5
-            template.showhide = !template.showhide;
-          });
+    template.addEventListener('template-bound', function(e) {
+      // bind event handlers to template's children
+      $('#resume-page').off();
+      $('#resume-page').on('click', 'div.header', function() {
+        var $header = $(this);
+        $header.next().slideToggle(function(){
+          if($header.find('.arrow').hasClass('rotate')) {
+            template.closedSections -= 1;
+          } else {
+            template.closedSections += 1;
+          }
+          if(template.closedSections === 4) {
+            template.showhide = true;
+          } else if(!template.closedSections) {
+            template.showhide = false;
+          }
         });
-
-    script.
-      /**
-       * template handlers
-       */
-      var visitedRoutes = [];
-      var template = document.querySelector('template[is="auto-binding"]');
-      template.closedSections = 4;
-      template.urls = [
-        'about',
-        'code',
-        'resume'
-      ];
-
-      template.addEventListener('template-bound', function(e) {
-        // Use URL hash for initial route. Otherwise, use the first page.
-        this.route = this.route || 'about';
-        this.onRoute(null, this.route);
+        $(this).find('.arrow').toggleClass('rotate');
       });
-      template.parseResponse = function (e, object, element) {
-        this.loading = false;
-        this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
-      };
-      template.onRoute = function (e, route) {
-        if(!this.$) {
-          return;
+      // need to delegate because dom doesn't exist yet
+      $('#resume-page').on('click', '#showhide', function() {
+        var sections = $('div.section');
+        var filtered;
+        if(template.showhide) {
+          filtered = sections.filter(':hidden').slideDown();
+        } else {
+          filtered = sections.filter(':visible').slideUp();
         }
+        filtered.each(function() {
+          $(this.previousSibling).find('.arrow').toggleClass('rotate');
+        })
+        template.closedSections = template.showhide ? 0 : 4
+        template.showhide = !template.showhide;
+      });
+    
+      // Use URL hash for initial route. Otherwise, use the first page.
+      this.route = this.route || 'about';
+      this.onRoute(null, this.route);
+    });
+    template.parseResponse = function (e, object, element) {
+      this.loading = false;
+      this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
+    };
+    template.onRoute = function (e, route) {
+      if(!this.$) {
+        return;
+      }
 
-        if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
-          visitedRoutes.push(route);
-          this.loading = true;
-          this.showhide = true;
-          this.$['ajax-' + route] && this.$['ajax-' + route].go();
-        }
-      };
+      if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
+        visitedRoutes.push(route);
+        this.loading = true;
+        this.showhide = true;
+        this.$['ajax-' + route] && this.$['ajax-' + route].go();
+      }
+    };
