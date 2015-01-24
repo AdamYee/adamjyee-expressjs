@@ -4,7 +4,7 @@ var jade = require('jade');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', {index: true});
 });
 router.get('/about', function (req, res) {
   res.send(jade.renderFile('views/home/about.jade'));
