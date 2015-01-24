@@ -17,7 +17,7 @@ block head
   link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
   link(rel='import' href='javascripts/bower_components/paper-spinner/paper-spinner.html')
   link(rel='import' href='javascripts/bower_components/flatiron-director-0.5.0/flatiron-director.html')
-  link(rel='stylesheet' href='stylesheets/index.css')
+  link(rel='stylesheet' href='stylesheets/index.css' shim-shadowdom)
   script(src='javascripts/bower_components/jquery/jquery.js')
 
 block content
@@ -117,15 +117,16 @@ block content
       this.route = this.route || 'about';
       this.onRoute(null, this.route);
     });
+
     template.parseResponse = function (e, object, element) {
       this.loading = false;
       this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
     };
+
     template.onRoute = function (e, route) {
       if(!this.$) {
         return;
       }
-
       if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
         visitedRoutes.push(route);
         this.loading = true;
