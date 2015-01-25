@@ -1,17 +1,15 @@
 {
   "name": "polymer-minesweeper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "authors": [
     "Adam <adamjyee@gmail.com>"
   ],
   "description": "mine sweeper polymer component",
   "license": "MIT",
+  "main": "ms-play.html",
   "ignore": [
-    "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~0.5.2"
