@@ -1,0 +1,6 @@
+node_modules
+core-component-page
+polymer
+webcomponentsjs
+*.log
+demo/
