@@ -1,0 +1,31 @@
+{
+  "name": "polymer-minesweeper",
+  "version": "2.0.0",
+  "description": "using Polymer to build minesweeper the game",
+  "author": "AdamYee",
+  "contributors": [
+    {
+      "name": "Adam Yee",
+      "email": "adamjyee@gmail.com"
+    }
+  ],
+  "scripts": {
+    "serve": "node node_modules/http-server/bin/http-server",
+    "clean": "rm -r es6/*; rm -r demo/*; rm -r lib/*",
+    "6to5": "./node_modules/.bin/6to5 src --out-dir es6 --source-maps",
+    "copyES6": "mkdir demo; cp -r es6 demo/",
+    "copyHtml": "cp play-minesweeper.html ms-board.html ms-cell.html demo; cp src/index.html demo",
+    "copyPolyfill": "cp ./node_modules/6to5/browser-polyfill.js lib; cp -r lib demo/",
+    "build": "npm run 6to5 && npm run copyES6 && npm run copyHtml && npm run copyPolyfill",
+    "prestart": "npm run build",
+    "start": "npm run serve"
+  },
+  "repository": {},
+  "dependencies": {
+    "6to5": "^2.13.7"
+  },
+  "devDependencies": {
+    "http-server": "0.7.4"
+  },
+  "license": "MIT"
+}

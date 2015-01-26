@@ -1,0 +1,32 @@
+{
+  "name": "polymer-minesweeper",
+  "version": "1.1.2",
+  "authors": [
+    "Adam <adamjyee@gmail.com>"
+  ],
+  "description": "mine sweeper polymer component",
+  "license": "MIT",
+  "main": "ms-play.html",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "keywords": [
+    "polymer",
+    "webcomponents",
+    "web-components"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.2"
+  },
+  "homepage": "https://github.com/AdamYee/play-minesweeper",
+  "_release": "1.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.2",
+    "commit": "7ea0359d621277c43e37d56ab6f0237b86ae352b"
+  },
+  "_source": "https://github.com/AdamYee/play-minesweeper.git",
+  "_target": "v1.1.2",
+  "_originalSource": "https://github.com/AdamYee/play-minesweeper.git"
+}

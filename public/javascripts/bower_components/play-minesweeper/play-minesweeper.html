@@ -1,0 +1,48 @@
+<script src='lib/browser-polyfill.js'></script>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="ms-board.html">
+
+<polymer-element name="play-minesweeper">
+  <template>
+    <style>
+    :host {
+      font-family: sans-serif;
+    }
+    h1 {
+      display: inline-block;
+      padding-right: 20px;
+    }
+    button {
+      height: 43px;
+      width: 100px;
+      margin-left: 10px;
+    }
+    #board {
+      border-top: 1px solid #ccc;
+    }
+    #inputs {
+      font-size: 12px;
+      font-weight: bold;
+      width: 222px;
+      padding-top: 19px;
+    }
+    #inputs input {
+      width: 50px;
+    }
+    </style>
+    <div horizontal layout>
+      <h1>&lt;play-mine-sweeper&gt;</h1>
+      <div id="inputs" horizontal layout>
+        <template repeat="{{i in inputsConfig}}">
+          <div flex vertical layout center>
+            <div>{{i.name}}</div>
+            <input type="number" step="{{i.step}}" min="{{i.min}}" max="{{i.max}}" value="{{i.value}}">
+          </div>
+        </template>
+      </div>
+      <button on-click="{{play}}" self-center>Play</button>
+    </div>
+    <div id="board"></div>
+  </template>
+  <script src="es6/play.js"></script>
+</polymer-element>

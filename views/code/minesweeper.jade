@@ -3,10 +3,9 @@ extends ../analytics-wrapper.jade
 block head
   title= 'Polymer Mine Sweeper'
   script(src='/javascripts/bower_components/webcomponentsjs/webcomponents.js')
-  script(src='/javascripts/bower_components/polymer-minesweeper/lib/browser-polyfill.js')
-  link(rel='import' href='/javascripts/bower_components/polymer-minesweeper/ms-play.html')
+  link(rel='import' href='/javascripts/bower_components/play-minesweeper/play-minesweeper.html')
 
 block content
   body
     a(href='/#code') Back
-    ms-play
+    play-minesweeper
