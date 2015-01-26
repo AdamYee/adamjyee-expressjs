@@ -24,7 +24,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v1.1.2",
-    "commit": "7ea0359d621277c43e37d56ab6f0237b86ae352b"
+    "commit": "5e41e7367304d168c715488f71dde1804c5ede11"
   },
   "_source": "https://github.com/AdamYee/play-minesweeper.git",
   "_target": "v1.1.2",
