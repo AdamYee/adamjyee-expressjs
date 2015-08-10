@@ -16,6 +16,5 @@
   },
   "_source": "git://github.com/BlueSpire/Durandal-Bower.git",
   "_target": "~2.1.0",
-  "_originalSource": "durandal",
-  "_direct": true
+  "_originalSource": "durandal"
 }

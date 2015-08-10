@@ -7,62 +7,87 @@ block head
   meta(name="viewport" content="width=device-width, initial-scale=0.6")
   meta(name="description" content="My own little web presence. About me, resume and code stuff.")
   
-  script(src='javascripts/bower_components/webcomponentsjs/webcomponents.js')
+  script(src='javascripts/bower_components/webcomponentsjs/webcomponents-lite.min.js')
   link(rel='import' href='javascripts/bower_components/polymer/polymer.html')
-  link(rel='import' href='javascripts/bower_components/core-header-panel/core-header-panel.html')
-  link(rel='import' href='javascripts/bower_components/core-animated-pages/core-animated-pages.html')
-  link(rel='import' href='javascripts/bower_components/core-ajax/core-ajax.html')
-  link(rel='import' href='javascripts/bower_components/core-icons/core-icons.html')
+  link(rel='import' href='javascripts/bower_components/iron-flex-layout/iron-flex-layout.html')
+  link(rel='import' href='javascripts/bower_components/paper-header-panel/paper-header-panel.html')
+  link(rel='import' href='javascripts/bower_components/neon-animation/neon-animated-pages.html')
+  link(rel='import' href='javascripts/bower_components/neon-animation/neon-animatable.html')
+  link(rel='import' href='javascripts/bower_components/neon-animation/neon-animations.html')
+  link(rel='import' href='javascripts/bower_components/iron-ajax/iron-ajax.html')
+  link(rel='import' href='javascripts/bower_components/iron-icons/iron-icons.html')
   link(rel='import' href='javascripts/bower_components/paper-tabs/paper-tabs.html')
   link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
   link(rel='import' href='javascripts/bower_components/paper-spinner/paper-spinner.html')
-  link(rel='import' href='javascripts/bower_components/flatiron-director-0.5.0/flatiron-director.html')
   link(rel='stylesheet' href='stylesheets/index.css' shim-shadowdom)
   script(src='javascripts/bower_components/jquery/jquery.js')
+  script(src='javascripts/bower_components/director/build/director.min.js')
+  style(is='custom-style').
+    paper-tab a {
+      color: #fff;
+      text-decoration: none;
+    }
+    paper-tab::shadow .tab-content:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+    paper-tab::shadow .tab-content {
+      margin: 0;
+    }
+    paper-tabs::shadow #selectionBar {
+      height: 4px;
+    }
+    paper-header-panel::shadow #mainContainer {
+      padding: 20px 15%;
+      font-size: 14px;
+      color: #444;
+    }
+
 
 block content
-  template#template(is='auto-binding')
-    flatiron-director(route='{{route}}' autoHash on-director-route='{{onRoute}}')
+  template#template(is='dom-bind')
 
-    template(repeat="{{url in urls}}")
-      core-ajax(id='{{ "ajax-" + url }}' url='{{url}}' on-core-response='{{parseResponse}}')
+    iron-ajax(id="ajax-about" url='about' handle-as='text' on-response='parseResponse')
+    iron-ajax(id="ajax-code" url='code' handle-as='text' on-response='parseResponse')
+    iron-ajax(id="ajax-resume" url='resume' handle-as='text' on-response='parseResponse')
 
-    core-header-panel(mode='seamed' flex)
-      div.core-header(horizontal layout)
-        paper-tabs#tabs(
-          valueattr='hash'
-          selected='{{route}}'
-          class="{{ {'expand': route === 'about'} | tokenList }}"
-          flex noink noslide
-            )
-          paper-tab(hash='about') About
-          paper-tab(hash='code') Code
-          paper-tab(hash='contact') Contact
-          paper-tab(hash='resume') Resume
-        span#spacer(class="{{ {'expand': route === 'about'} | tokenList }}")
-        div#marque(
-          class="{{ {'slide': route === 'about'} | tokenList }}"
-            )
-          a(href='#about') Adam Yee
-          div
-            span(block) Front End Developer
-            span(block) Xero
-      core-animated-pages(valueattr='hash' selected='{{route}}' transitions='cross-fade')
-        div#about-page(class='page' hash='about' hidden?='{{route !== "about"}}')
-          div.fade-content(cross-fade)
-        div#code-page(class='page' hash='code' hidden?='{{route !== "code"}}')
-          div.fade-content(cross-fade)
-        div#contact-page(class='page' hash='contact' hidden?='{{route !== "contact"}}')
-          div.fade-content(cross-fade horizontal layout)
+    paper-header-panel.flex(mode='seamed')
+      div.paper-header.layout.horizontal
+
+        paper-tabs#tabs.flex(selected='{{selectedTab}}' noink no-slide align)
+          paper-tab
+            a.horizontal.center-center.layout(href='#/about') About
+          paper-tab
+            a.horizontal.center-center.layout(href='#/code') Code
+          paper-tab
+            a.horizontal.center-center.layout(href='#/contact') Contact
+          paper-tab
+            a.horizontal.center-center.layout(href='#/resume') Resume
+
+        span#spacer
+        div#marque
+          a(href='#/about') Adam Yee
+          div Front End Developer
+          div Xero
+
+      neon-animated-pages(selected='[[selectedTab]]' entry-animation='fade-in-animation' exit-animation='fade-out-animation')
+
+        neon-animatable#about-page
+
+        neon-animatable#code-page
+
+        neon-animatable#contact-page
+          div.fade-content.layout.horizontal
             span(style="width: 5%;")
             a#linkedin.logo-link(href="http://www.linkedin.com/pub/adam-yee/1425/7b0/" target="_blank")
               img(src='../images/linkedin-logo.png')
             span(style="width: 8%;")
             a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
               img(src='../images/github_512_black.png')
-        div#resume-page(class='page' hash='resume' hidden?='{{route !== "resume"}}')
-          div.fade-content(cross-fade)
-      #spinner-container(horizontal center-justified layout)
+
+        neon-animatable#resume-page
+
+      #spinner-container.layout.horizontal.center-justified
         paper-spinner.green(active?='{{loading}}' role='progress-bar')
 
   script.
@@ -70,15 +95,49 @@ block content
      * template handlers
      */
     var visitedRoutes = [];
-    var template = document.querySelector('template[is="auto-binding"]');
+    var template = document.querySelector('#template');
     template.closedSections = 4;
-    template.urls = [
-      'about',
-      'code',
-      'resume'
-    ];
+    template.routeMap = {
+      'about': 0,
+      'code': 1,
+      'contact': 2,
+      'resume': 3
+    };
+    /**
+     * Director Routing
+     */
+    function playAnimations(route) {
+      if(route === 'about') {
+        $('#tabs, #spacer').addClass('expand');
+        $('#marque').addClass('slide');
+      } else {
+        $('#tabs, #spacer').removeClass('expand');
+        $('#marque').removeClass('slide');
+      }
+    }
+    function routeHandler() {
+      var route = window.location.hash.slice(2) || 'about';
+      template.selectedTab = template.routeMap[route];
+      if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
+        visitedRoutes.push(route);
+        $.ajax(route).then(function(response) {
+          var div = document.createElement('div');
+          div.innerHTML = response;
+          $('#' + route + '-page').append(div);
+        });
+      }
+      playAnimations(route);
+    }
+    var routes = {
+      '/about': routeHandler,
+      '/code': routeHandler,
+      '/contact': routeHandler,
+      '/resume': routeHandler
+    }
+    var router = Router(routes);
+    router.init();
 
-    template.addEventListener('template-bound', function(e) {
+    template.addEventListener('dom-change', function(e) {
       // bind event handlers to template's children
       $('#resume-page').off();
       $('#resume-page').on('click', 'div.header', function() {
@@ -91,7 +150,9 @@ block content
           }
           if(template.closedSections === 4) {
             template.showhide = true;
+            $('#showhide > paper-material').text('show all');
           } else if(!template.closedSections) {
+            $('#showhide > paper-material').text('hide all');
             template.showhide = false;
           }
         });
@@ -111,26 +172,15 @@ block content
         })
         template.closedSections = template.showhide ? 0 : 4
         template.showhide = !template.showhide;
+        if(template.showhide)
+          $('#showhide > paper-material').text('show all');
+        else
+          $('#showhide > paper-material').text('hide all');
       });
-    
-      // Use URL hash for initial route. Otherwise, use the first page.
-      this.route = this.route || 'about';
-      this.onRoute(null, this.route);
     });
 
-    template.parseResponse = function (e, object, element) {
-      this.loading = false;
-      this.injectBoundHTML(object.response, this.$[element.url + '-page'].querySelector('.fade-content'));
-    };
+    window.addEventListener('WebComponentsReady', function() {
+      routeHandler();
+      template.showhide = true;
+    });
 
-    template.onRoute = function (e, route) {
-      if(!this.$) {
-        return;
-      }
-      if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
-        visitedRoutes.push(route);
-        this.loading = true;
-        this.showhide = true;
-        this.$['ajax-' + route] && this.$['ajax-' + route].go();
-      }
-    };

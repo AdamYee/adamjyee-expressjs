@@ -3,7 +3,7 @@
  */
 ((root, factory) => {
   root.MSPolymer = factory(root, {});
-}(this /* environment global */, (root, MSPolymer) => {
+}(this || window /* environment global */, (root, MSPolymer) => {
 
   class Cell {
     constructor(i, j) {
@@ -11,7 +11,7 @@
       this.revealed = false;
       this.flagged = false;
       this.risk = 0;
-      this.id = "cid_" + i + '_' + j;
+      this.id = `cid_${i}_${j}`;
       this.memoizedRevealedVal; // memoized display value
     }
 
@@ -49,7 +49,7 @@
 
   class Grid {
     constructor(rows, columns, mines) {
-      this.cells = [];
+      this.grid = [];
       this.mineArray = [];
       this.rows = rows;
       this.columns = columns;
@@ -57,9 +57,9 @@
       
       // Generate grid of empty Cell Objects
       for(let i = 0; i < rows; i++) {
-        this.cells[i] = [];
+        this.grid[i] = [];
         for(let j = 0; j < columns; j++) {
-          this.cells[i][j] = new Cell(i, j);
+          this.grid[i][j] = new Cell(i, j);
         }
       }
 
@@ -67,14 +67,14 @@
       for(let c = 0; c < mines; c++) {
         let a = Math.floor(rows * Math.random());
         let b = Math.floor(columns * Math.random());
-        if (this.cells[a][b].mine === true) {
+        if (this.grid[a][b].mine === true) {
           c--;
           continue;
         }
-        this.cells[a][b].mine = true;
-        this.mineArray.push(this.cells[a][b].id)
+        this.grid[a][b].mine = true;
+        this.mineArray.push(this.grid[a][b].id)
         let incrementRisk = this.forEachSurroudingCell(a, b);
-        incrementRisk((r, c) => this.cells[r][c].risk += 1);
+        incrementRisk((r, c) => this.grid[r][c].risk += 1);
       }
     }
     
@@ -111,16 +111,16 @@
      * @return {Boolean} - true if rows * columns equals # of revealed cells + # of flagged cells
      */
     hasWon() {
-      function counters (p, c) {
+      function sumCounters(p, c) {
         return { revealed: p.revealed + c.revealed, flagged: p.flagged + c.flagged };
       }
-      let counters = this.cells
+      let counters = this.grid
         .map((row) =>
           row.map((cell) => {
             return { revealed: cell.revealed ? 1 : 0, flagged: cell.flagged ? 1 : 0 };
           })
-          .reduce(counters))
-        .reduce(counters);
+          .reduce(sumCounters))
+        .reduce(sumCounters);
       return this.rows * this.columns === counters.revealed + counters.flagged;
     }
   }
