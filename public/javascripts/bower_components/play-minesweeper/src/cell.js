@@ -1,10 +1,34 @@
-Polymer('ms-cell', {
-  publish: {
-    cell: null,
+Polymer({
+  is: 'ms-cell',
+  properties: {
+    cell: Object,
+    color: {
+      type: String,
+      notify: true
+    },
     revealed: {
+      type: Boolean,
       value: false,
-      reflect: true
+      observer: 'revealedChanged'
+    },
+    hide: {
+      type: Boolean,
+      computed: 'computedHide(cell.flagged, revealed)'
+    },
+    showFlag: { type: Boolean, value: false },
+    displayVal: {
+      type: String,
+      computed: 'computedDisplayVal(cell.flagged, revealed)'
     }
+  },
+  observers: [
+    'colorChanged(cell.color)'
+  ],
+  colorChanged() {
+    this.color = `color: ${this.cell.color()}`
+  },
+  computedHide(flagged, revealed) {
+    return !flagged && !revealed;
   },
   computedDisplayVal(flagged, revealed) {
     if(flagged && !revealed) {
@@ -13,12 +37,11 @@ Polymer('ms-cell', {
       return this.cell.revealedVal();
     }
   },
-  computed: {
-    'hide'            : '!cell.flagged && !revealed',
-    'displayVal'      : 'computedDisplayVal(cell.flagged, revealed)'
-  },
   ready() {
-    this.color = this.cell.color();
+    this.color = 'color:' + this.cell.color();
+    this.bindPropagate();
+  },
+  bindPropagate() {
     /**
      * Recursively reveal a 0 risk cell's neighbors.
      * And check for wins if revealing a risky cell.
@@ -43,7 +66,7 @@ Polymer('ms-cell', {
   revealedChanged() {
     if(this.revealed) {
       this.cell.revealed = true;
-      this.setAttribute('class', this.cell.mine ? 'explode' : 'revealed');
+      Polymer.dom(this).classList.add(this.cell.mine ? 'explode' : 'revealed');
     }
   },
   reveal(event, detail, sender) {
@@ -64,17 +87,18 @@ Polymer('ms-cell', {
     if(this.revealed) {
       return;
     } else {
+      let flag = this.$$('#flag');
       if(!this.cell.flagged) {
-        this.$.content.setAttribute('class', 'flagged drop-flag');
-        this.cell.flagged = true;
-        this.color = 'orange';
+        Polymer.dom(flag).classList.add('flagged', 'drop-flag');
+        this.cell.flagged = this.showFlag = true;
+        this.color = 'color:orange';
         this.fire('flagged', 1);
       } else {
         let removeFlag = () => {
-          this.cell.flagged = false;
-          this.color = this.cell.color();
+          this.cell.flagged = this.showFlag = false;
+          Polymer.dom(flag).classList.remove('flagged', 'pickup-flag');
+          this.color = 'color:' + this.cell.color();
           this.fire('flagged', -1);
-          this.$.content.setAttribute('class', '');
           this.removeEventListener('webkitAnimationEnd', removeFlag);
           this.removeEventListener('MSAnimationEnd', removeFlag);
           this.removeEventListener('animationend', removeFlag);
@@ -86,14 +110,25 @@ Polymer('ms-cell', {
          * Animate the flag pickup:
          * Removing a class with animation (possible specific to reverse animation)
          * and then adding a class with animation on different cycles (eventloops)
-         * seems to do the trick.
+         * to prevent flicker and conflicting animation rules.
          */
-        let content = this.$.content;
-        content.setAttribute('class', 'flagged');
+        Polymer.dom(flag).classList.remove('drop-flag');
         setTimeout(() => {
-          content.setAttribute('class', 'flagged pickup-flag');
+          Polymer.dom(flag).classList.add('pickup-flag');
         }, 0);
       }
     }
+  },
+
+  reset() {
+    // hide
+    this.revealed = false;
+    Polymer.dom(this).classList.remove('explode', 'revealed');
+    // unflag
+    this.cell.flagged = this.showFlag = false;
+    let flag = this.$$('#flag');
+    Polymer.dom(flag).classList.remove('flagged', 'drop-flag');
+    // rebind event listeners
+    this.bindPropagate();
   }
 });

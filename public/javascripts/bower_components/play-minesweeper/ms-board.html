@@ -2,14 +2,8 @@
 <link rel="import" href="ms-cell.html">
 <script type="text/javascript" src="es6/grid.js"></script>
 
-<polymer-element
-  name="ms-board"
-  attributes="rows columns mines"
-  on-explosion="{{createExplosion}}"
-  on-flagged="{{flaggedHandler}}"
-  on-check-win="{{checkWin}}">
-  <template>
-    <style>
+<dom-module id="ms-board">
+  <style>
     #board {
       position: relative;
       margin-left: 50px;
@@ -37,33 +31,42 @@
       -webkit-animation: show 1.2s;
       animation: show 1.2s;
       opacity: 1;
+      @apply(--layout);
+      @apply(--layout-center);
+      @apply(--layout-center-justified);
+    }
+    .row {
+      @apply(--layout-horizontal);
     }
     @-webkit-keyframes show {
       0% {opacity: 0;}
       100% {opacity: 100;}
     }
     @keyframes show { 0% {opacity: 0;} 100% {opacity: 100;} }
-    </style>
-    <div id="board">
-      <template repeat="{{ row in grid.cells }}">
-        <div horizontal layout>
-          <template repeat="{{ cell in row }}">
+  </style>
+  <template>
+    <div id="board"
+      on-explosion="createExplosion"
+      on-flagged="flaggedHandler"
+      on-check-win="checkWin">
+      <template is="dom-repeat" items="{{grid.grid}}" as="row">
+        <div class="row">
+          <template is="dom-repeat" items="{{row}}" as="cell">
             <ms-cell
               id="{{cell.id}}"
-              cell={{cell}}
-              on-reveal-neighbors="{{revealNeighbors}}">
+              cell="{{cell}}"
+              on-reveal-neighbors="revealNeighbors">
             </ms-cell>
           </template>
         </div>
       </template>
       <div
         id="game-end"
-        class="{{ {'show': doneExploding || win} | tokenList }}"
-        hidden?="{{!gameOver}}"
-        horizontal center-justified layout center>
-        <span style="color: {{win ? 'green' : 'red'}}">{{gameEndMessage}}</span>
+        class$="{{_gameEndCss}}"
+        hidden$="{{!gameOver}}">
+        <span style$="{{_gameEndColor}}">{{_gameEndMessage}}</span>
       </div>
     </div>
   </template>
   <script src="es6/board.js"></script>
-</polymer-element>
+</dom-module>

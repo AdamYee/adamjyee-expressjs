@@ -5,7 +5,7 @@ body {
 body, h3 {
   font-weight: 100;
 }
-.core-header {
+.paper-header {
   padding: 0 15%;
   background-color: #03A9F4;
   color: white;
@@ -19,9 +19,6 @@ body, h3 {
 }
 .fade-content {
   margin-bottom: 10%;
-}
-.fade-content {
-
 }
 #spinner-container {
   padding-top: 25%
@@ -71,21 +68,6 @@ body, h3 {
 #tabs.expand {
   height: 55px;
   margin-top: 80px;
-}
-paper-tab::shadow .tab-content:hover {
-  cursor: pointer;
-  opacity: 1;
-}
-paper-tab::shadow .tab-content {
-  margin: 0;
-}
-paper-tabs::shadow #selectionBar {
-  height: 4px;
-}
-core-header-panel::shadow #mainContainer {
-  padding: 20px 15%;
-  font-size: 14px;
-  color: #444;
 }
 #contact-page {
   margin-top: 3%;

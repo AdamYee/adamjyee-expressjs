@@ -2,7 +2,7 @@
 ===================================
 
 Mine Sweeper made with Polymer built to be used as a bower package. Javascript source is written in
-ES6 and compiled to ES5 using [6to5](http://6to5.org/).
+ES6 and transpiled to ES5 using [babeljs](https://babeljs.io/).
 
 ```
 bower install play-minesweeper
@@ -12,7 +12,7 @@ Usage
 -----
 
 ```html
-<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 <link rel="import" href="bower_components/play-minesweeper/play-minesweeper.html">
 <play-minesweeper></play-minesweeper>
 ```

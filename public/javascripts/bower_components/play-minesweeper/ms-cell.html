@@ -1,13 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<polymer-element
-  name="ms-cell"
-  attributes="cell revealed"
-  on-click="{{reveal}}"
-  on-contextmenu="{{flag}}"
-  horizontal center-justified layout center>
-  <template>
-    <style>
+<dom-module id="ms-cell">
+  <style>
     :host {
       background-color: #ccc;
       border: 1px solid #191919;
@@ -21,6 +15,17 @@
       background-color: #eee;
       -webkit-animation: ripple 75ms, fade 300ms;
       animation: ripple 75ms, fade 300ms;
+    }
+    :host(.explode) {
+      background-color: #eee;
+      -webkit-animation: ripple 275ms, explode 275ms;
+      animation: ripple 275ms, explode 275ms;
+    }
+    #cell-wrapper {
+      height: inherit;
+      @apply(--layout);
+      @apply(--layout-center);
+      @apply(--layout-center-justified);
     }
     .flagged {
       z-index: 99;
@@ -38,11 +43,6 @@
     .pickup-flag {
       -webkit-animation: flag 250ms reverse;
       animation: flag 250ms reverse;
-    }
-    :host(.explode) {
-      background-color: #eee;
-      -webkit-animation: ripple 275ms, explode 275ms;
-      animation: ripple 275ms, explode 275ms;
     }
     @-webkit-keyframes flag {
       0% {
@@ -71,13 +71,13 @@
         margin: 0;
       }
       70% {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
         /**
          * shrinking the margin in sync with height and width growth
          * prevents the height and width from pushing everything around it.
          */
-        margin: -4px;
+        margin: -2px;
       }
       100% {
         z-index: 0;
@@ -101,9 +101,12 @@
     @keyframes ripple { 0% { z-index: 99; width: 30px; height: 30px; margin: 0; } 70% { width: 38px; height: 38px; margin: -4px; } 100% { z-index: 0; width: 30px; height: 30px; margin: 0; } }
     @keyframes fade { 0% { background-color: #ccc; } 100% { background-color: #eee; } }
     @keyframes explode { 50% { background-color: orangered; box-shadow: 0 0 65px 10px red; } }
-    
-    </style>
-    <div id="content" hidden?="{{hide}}" style="color: {{color}}">{{displayVal}}</div>
+  </style>
+  <template>
+    <div on-click="reveal" on-contextmenu="flag" id="cell-wrapper" style$="{{color}}">
+      <div id="flag" hidden$="{{!showFlag}}">F</div>
+      <div hidden$="{{hide}}">{{displayVal}}</div>
+    </div>
   </template>
   <script src="es6/cell.js"></script>
-</polymer-element>
+</dom-module>
