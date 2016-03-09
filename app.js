@@ -4,10 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
-var messages = require('./routes/messages');
 
 var env = process.argv.slice(2)[0];
 
@@ -25,15 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// database
-if(env === 'dev') {
-  mongoose.connect('mongodb://localhost/adamjyee');
-} else {
-  mongoose.connect('mongodb://nodejitsu:b7778d914cbf159f76169c3f9b0ab188@troup.mongohq.com:10046/nodejitsudb1880548233');
-}
-
 app.use('/', routes);
-app.use('/messages', messages);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
