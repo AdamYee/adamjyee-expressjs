@@ -6,7 +6,7 @@ body, h3 {
   font-weight: 100;
 }
 .paper-header {
-  padding: 0 15%;
+  padding: 0 20%;
   background-color: #03A9F4;
   color: white;
 }
@@ -38,7 +38,7 @@ body, h3 {
 }
 #marque.slide {
   left: 0;
-  padding-left: 15%;
+  padding-left: 20%;
 }
 #marque > div {
   padding-left: 7px;
