@@ -7,7 +7,7 @@
   },
   "description": "Personal website",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=development node app.js",
     "predeploy": "bower update"
   },
   "main": "app.js",
