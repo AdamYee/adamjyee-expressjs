@@ -16,6 +16,10 @@ router.get('/resume', function (req, res) {
   res.send(jade.renderFile('views/home/resume.jade'));
 });
 
+router.get('/blog', function (req, res) {
+  res.render('blog-list');
+});
+
 router.get('/code/play-minesweeper', function (req, res) {
   res.render('code/minesweeper');
 });

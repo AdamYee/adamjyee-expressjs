@@ -58,6 +58,8 @@ block content
           paper-tab
             a.horizontal.center-center.layout(href='#/about') About
           paper-tab
+            a.horizontal.center-center.layout(href='#/blog') Blog
+          paper-tab
             a.horizontal.center-center.layout(href='#/code') Code
           paper-tab
             a.horizontal.center-center.layout(href='#/contact') Contact
@@ -74,6 +76,8 @@ block content
 
         neon-animatable#about-page
 
+        neon-animatable#blog-page
+
         neon-animatable#code-page
 
         neon-animatable#contact-page
@@ -89,7 +93,7 @@ block content
 
       #spinner-container.layout.horizontal.center-justified
         paper-spinner.green(active?='{{loading}}' role='progress-bar')
-
+  
   script.
     /**
      * template handlers
@@ -99,9 +103,10 @@ block content
     template.closedSections = 4;
     template.routeMap = {
       'about': 0,
-      'code': 1,
-      'contact': 2,
-      'resume': 3
+      'blog': 1,
+      'code': 2,
+      'contact': 3,
+      'resume': 4
     };
     /**
      * Director Routing
@@ -118,6 +123,9 @@ block content
     function routeHandler() {
       var route = window.location.hash.slice(2) || 'about';
       template.selectedTab = template.routeMap[route];
+      if(route === 'blog') {
+        window.location.replace('/blog');
+      }
       if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
         visitedRoutes.push(route);
         $.ajax(route).then(function(response) {
@@ -130,6 +138,7 @@ block content
     }
     var routes = {
       '/about': routeHandler,
+      '/blog': routeHandler,
       '/code': routeHandler,
       '/contact': routeHandler,
       '/resume': routeHandler
