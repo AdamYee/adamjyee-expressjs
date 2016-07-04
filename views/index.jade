@@ -1,4 +1,4 @@
-extends ./analytics-wrapper.jade
+extends ./extends/analytics-wrapper.jade
 
 block head
   title Adam Yee - Personal Website
@@ -39,7 +39,7 @@ block head
     }
     paper-header-panel::shadow #mainContainer {
       padding: 20px 20%;
-      font-size: 0.8em;
+      font-size: 0.85em;
       color: #444;
     }
 
@@ -125,6 +125,7 @@ block content
       template.selectedTab = template.routeMap[route];
       if(route === 'blog') {
         window.location.replace('/blog');
+        return;
       }
       if(route !== 'contact' && visitedRoutes.indexOf(route) === -1) {
         visitedRoutes.push(route);

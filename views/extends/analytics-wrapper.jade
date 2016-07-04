@@ -1,4 +1,3 @@
-//- 
 doctype html
 html
   head
@@ -7,10 +6,10 @@ html
 if index
   body.fullbleed.layout.vertical(resolved)
     block content
-    //- Google Analytics for each page
-    include ./analytics.jade
 else
   body
     block content
-    //- Google Analytics for each page
-    include ./analytics.jade
+    
+//- Google Analytics for each page
+if env == "production"
+  include ../include/analytics.jade

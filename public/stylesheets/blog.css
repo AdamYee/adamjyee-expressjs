@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+}
+header {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+}
+nav {
+  border-bottom: 1px solid #eee;
+}
+main {
+  padding-top: 50px;
+}
+.navbar-inner {
+  height: 50px;
+  position: relative;
+}
+.maxWidth1000 {
+  max-width: 1000px!important;
+}
+.maxWidth800 {
+  max-width: 800px!important;
+}
+.paddingRight20 {
+  padding-right: 20px!important;
+}
+.paddingLeft20 {
+  padding-left: 20px!important;
+}
+.marginAuto {
+  margin: 0 auto;
+}
+.floatLeft {
+    float: left!important;
+}
+.floatRight {
+    float: right!important;
+}
