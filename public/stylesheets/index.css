@@ -113,7 +113,8 @@ h3 {
   font-size: 12px;
 }
 #code-page li {
-  margin-bottom: 15px;
+  margin-bottom: 35px;
+  list-style: none;
 }
 #code-page p {
   margin: 5px 0;
@@ -176,7 +177,7 @@ h3 {
   color: white;
   position: fixed;
   right: 20%;
-  top: 100px;
+  top: 103px;
   font-size: 10px;
 }
 #showhide:hover {

@@ -1,0 +1,25 @@
+extends ../extends/analytics-wrapper.jade
+
+block head
+  include ../include/blog-head.jade
+
+block content
+  include ../include/blog-nav.jade
+
+  main.maxWidth800.marginAuto
+    article#article
+    
+    a(class="muut" href="https://muut.com/i/adamjyee/comments" type="dynamic")
+    script(src="//cdn.muut.com/1/moot.min.js")
+  
+  script(src='/javascripts/bower_components/jquery/jquery.js')
+  script.
+    $(function() {
+      var regex = /\d{4}-\d{2}-\d{2}_.*/;
+      var articleContent = window.location.pathname.match(regex)[0];
+      $.ajax('/blog/article/' + articleContent).then(function(response) {
+          var div = document.createElement('div');
+          div.innerHTML = response;
+          $('#article').append(div);
+        });
+    })
