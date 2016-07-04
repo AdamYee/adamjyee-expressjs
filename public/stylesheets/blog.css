@@ -12,10 +12,11 @@ nav {
   border-bottom: 1px solid #eee;
 }
 main {
-  padding-top: 50px;
+  padding: 50px 15px 0px 15px;
 }
 main > ul {
   list-style: none;
+  padding-left: 0;
 }
 main > ul li {
   margin-bottom: 15px;
@@ -65,28 +66,31 @@ p {
 .float-right {
   float: right!important;
 }
+.margin-left-5 {
+  margin-left: 5px;
+}
 .blog-list-item {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 .blog-list-item > :nth-child(2) {
   flex-grow: 1;
 }
-
-/* articles */
-article {
-  padding: 0 10px;
+.padding-sides-15 {
+  padding: 0 15px;
 }
-span.date {
+.font-size-x-small {
   font-size: x-small;
 }
-
+.sup {
+  margin-left: -2px;
+}
 #svg {
-  stroke-dasharray: 7;
+  stroke-dasharray: 3 5;
+  stroke-width: 2;
+  margin-bottom: 3px;
+}
+.footnote {
+  display: inline-block;
 }
 
-/*Sometimes when exporting from a program like Illustrator elements have no stroke style attached to them. This results in confusion when Walkway starts the animation and nothing shows up. Just be sure to add base styles that can be overwritten if required.*/
-svg path {
-  stroke: #ddd
-  fill: transparent
-}

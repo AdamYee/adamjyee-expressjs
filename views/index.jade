@@ -67,7 +67,7 @@ block content
 
         span#spacer
         div#marque
-          a(href='#/about') Adam Yee
+          a(href='#/about') {{marqueName}}
           div Full Stack Developer
           div Xero
 
@@ -121,6 +121,7 @@ block content
     }
     function routeHandler() {
       var route = window.location.hash.slice(2) || 'about';
+      template.marqueName = route === 'about' ? 'Adam Yee' : 'AY';
       template.selectedTab = template.routeMap[route];
       if(route === 'blog') {
         window.location.replace('/blog');
