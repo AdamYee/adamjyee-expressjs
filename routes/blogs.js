@@ -15,7 +15,7 @@ router.get('/blog/:article', (req, res) => {
     if(err) {
       res.render('blog/404-article');
     } else {
-      res.render('blog/blog-article');
+      res.render('blog/article');
     }
   });
 });

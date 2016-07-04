@@ -79,12 +79,18 @@ p {
 .padding-sides-15 {
   padding: 0 15px;
 }
-span.date {
+.font-size-x-small {
   font-size: x-small;
 }
-
+.sup {
+  margin-left: -2px;
+}
 #svg {
   stroke-dasharray: 3 5;
   stroke-width: 2;
   margin-bottom: 3px;
 }
+.footnote {
+  display: inline-block;
+}
+
