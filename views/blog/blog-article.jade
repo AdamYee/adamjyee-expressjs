@@ -6,7 +6,7 @@ block head
 block content
   include ../include/blog-nav.jade
 
-  main.maxWidth800.marginAuto
+  main.max-width-800.margin-auto
     article#article
     
     a(class="muut" href="https://muut.com/i/adamjyee/comments" type="dynamic")
@@ -18,8 +18,8 @@ block content
       var regex = /\d{4}-\d{2}-\d{2}_.*/;
       var articleContent = window.location.pathname.match(regex)[0];
       $.ajax('/blog/article/' + articleContent).then(function(response) {
-          var div = document.createElement('div');
-          div.innerHTML = response;
-          $('#article').append(div);
-        });
-    })
+        var div = document.createElement('div');
+        div.innerHTML = response;
+        $('#article').append(div);
+      });
+    });
