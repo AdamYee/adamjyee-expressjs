@@ -1,4 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 body {
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
 }
 header {
@@ -12,28 +14,79 @@ nav {
 main {
   padding-top: 50px;
 }
+main > ul {
+  list-style: none;
+}
+main > ul li {
+  margin-bottom: 15px;
+}
+p {
+  color: #444;
+}
 .navbar-inner {
   height: 50px;
   position: relative;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 }
-.maxWidth1000 {
+.link {
+  color: #03A9F4;
+  text-decoration: none;
+}
+.link:hover {
+  color: #ff7b29;
+}
+.nav-link {
+  margin-left: 3%;
+}
+.article.link {
+  padding-right: 5px;
+}
+.max-width-1000 {
   max-width: 1000px!important;
 }
-.maxWidth800 {
+.max-width-800 {
   max-width: 800px!important;
 }
-.paddingRight20 {
+.padding-right-20 {
   padding-right: 20px!important;
 }
-.paddingLeft20 {
+.padding-left-20 {
   padding-left: 20px!important;
 }
-.marginAuto {
+.margin-auto {
   margin: 0 auto;
 }
-.floatLeft {
-    float: left!important;
+.float-left {
+  float: left!important;
 }
-.floatRight {
-    float: right!important;
+.float-right {
+  float: right!important;
+}
+.blog-list-item {
+  display: flex;
+  align-items: flex-end;
+}
+.blog-list-item > :nth-child(2) {
+  flex-grow: 1;
+}
+
+/* articles */
+article {
+  padding: 0 10px;
+}
+span.date {
+  font-size: x-small;
+}
+
+#svg {
+  stroke-dasharray: 7;
+}
+
+/*Sometimes when exporting from a program like Illustrator elements have no stroke style attached to them. This results in confusion when Walkway starts the animation and nothing shows up. Just be sure to add base styles that can be overwritten if required.*/
+svg path {
+  stroke: #ddd
+  fill: transparent
 }

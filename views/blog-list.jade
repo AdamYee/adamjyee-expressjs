@@ -6,7 +6,29 @@ block head
 block content
   include ./include/blog-nav.jade
 
-  main.maxWidth800.marginAuto
+  main.max-width-800.margin-auto
     ul
       li
-        a.link(href="/blog/2016-07-02_first") First Blog
+        div.blog-list-item
+          a.article.link(href="/blog/2016-07-02_first") First Blog
+          div.line-container
+          span.date 2016-07-02
+
+  script(src='/javascripts/bower_components/jquery/jquery.js')
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js")
+  script.
+    var line = $('.line-container');
+    var w = line.width();
+
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");  
+    svg.setAttributeNS(null, "id", "svg");
+    svg.setAttributeNS(null, "viewBox", "0 0 " + w + " 1");
+    $('.line-container').append(svg);
+
+    var paper = Snap("#svg");
+    var l = paper.line(0, 0, 0, 0)
+      .attr({
+        stroke: 'black',
+        fill: 'transparent'
+      })
+      .animate({x2: w}, 300); // mina.easeout
