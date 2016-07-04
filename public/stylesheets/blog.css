@@ -85,7 +85,7 @@ p {
 .sup {
   margin-left: -2px;
 }
-#svg {
+.line-container svg {
   stroke-dasharray: 3 5;
   stroke-width: 2;
   margin-bottom: 3px;

@@ -6,10 +6,6 @@ router.get('/', (req, res) => {
   render(res, 'index', {index: true});
 });
 
-router.get('/blog', (req, res) => {
-  render(res, 'blog-list');
-});
-
 router.get('/about', (req, res) => {
   renderJade(res, 'views/home/about.jade');
 });

@@ -8,27 +8,31 @@ block content
 
   main.max-width-800.margin-auto
     ul
-      li
-        div.blog-list-item
-          a.article.link(href="/blog/2016-07-02_first") First Blog
-          div.line-container
-          span.font-size-x-small.margin-left-5 2016-07-02
+      - for (var i=0; i<articles.length; i++)
+        li
+          div.blog-list-item
+            a.article.link(href="/blog/#{articles[i].path}") #{articles[i].articleName}
+            div.line-container
+            span.font-size-x-small.margin-left-5 #{articles[i].date}
 
   script(src='/javascripts/bower_components/jquery/jquery.js')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js")
   script.
-    var line = $('.line-container');
-    var w = line.width();
+    var lines = $('.line-container');
+    lines.each(function(i, el) {
+      var w = $(el).width();
+      var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");  
+      svg.setAttributeNS(null, "id", "line" + i);
+      svg.setAttributeNS(null, "viewBox", "0 0 " + w + " 3");
+      $(el).append(svg);
 
-    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");  
-    svg.setAttributeNS(null, "id", "svg");
-    svg.setAttributeNS(null, "viewBox", "0 0 " + w + " 3");
-    $('.line-container').append(svg);
-
-    var paper = Snap("#svg");
-    var l = paper.line(0, 0, 0, 0)
-      .attr({
+      var paper = Snap("#line" + i);
+      var l = paper.line(0, 0, 0, 0);
+      l.attr({
         stroke: '#bbb',
         fill: 'transparent'
-      })
-      .animate({x2: w}, 500); // mina.easeout
+      });
+      setTimeout(function() {
+        l.animate({x2: w}, 500);
+      }, i * 175)
+    });
