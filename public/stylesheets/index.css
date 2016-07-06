@@ -8,8 +8,12 @@ body, h3 {
 h3 {
   font-size: 1.5em;
 }
+neon-animatable {
+  max-width: 800px;
+  margin: 0 auto;
+}
 .paper-header {
-  padding: 0 10%;
+  padding: 0 15px;
   background-color: #03A9F4;
   color: white;
 }
@@ -63,6 +67,9 @@ h3 {
 #tabs {
   -webkit-transition: height 0.6s, margin-top 0.6s;
   transition: height 0.6s, margin-top 0.6s;
+  max-width: 800px!important;
+  margin-left: auto;
+  margin-right: auto;
 }
 #tabs.expand {
   height: 55px;
@@ -132,7 +139,7 @@ h3 {
   transition: color 250ms;
 }
 #resume-page > div {
-  padding-bottom: 37px;
+  padding-bottom: 70px;
   border-top: 1px solid #ccc;
 }
 #resume-page .header:hover h2 {
@@ -172,11 +179,9 @@ h3 {
   background: #03A9F4;
   color: white;
   position: fixed;
-  right: 20%;
-  top: 107px;
+  right: 20px;
+  bottom: 20px;
   font-size: 10px;
-}
-#showhide:hover {
 }
 #resume-page .section {
   border-top: 1px solid #ccc;
