@@ -4,7 +4,7 @@ block head
   title Adam Yee - Personal Website
 
   meta(http-equiv="Content-Type" content="text/html; charset=UTF-8")
-  meta(name="viewport" content="width=device-width, initial-scale=0.6")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
   meta(name="description" content="My own little web presence. About me, resume and code stuff.")
   
   script(src='javascripts/bower_components/webcomponentsjs/webcomponents-lite.min.js')
@@ -38,7 +38,7 @@ block head
       height: 4px;
     }
     paper-header-panel::shadow #mainContainer {
-      padding: 20px 20%;
+      padding: 20px 15px;
       color: #444;
     }
 
@@ -108,6 +108,10 @@ block content
       'resume': 4
     };
     /**
+     * mobile detection
+     */
+    template.isMobile = screen.width <= 480;
+    /**
      * Director Routing
      */
     function playAnimations(route) {
@@ -123,6 +127,15 @@ block content
       var route = window.location.hash.slice(2) || 'about';
       template.marqueName = route === 'about' ? 'Adam Yee' : 'AY';
       template.selectedTab = template.routeMap[route];
+      
+      if(template.isMobile) {
+        if(route === 'about') {
+          $('#marque').show();
+        } else {
+          $('#marque').hide();
+        }
+      }
+
       if(route === 'blog') {
         window.location.replace('/blog');
         return;
