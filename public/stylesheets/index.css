@@ -124,8 +124,13 @@ neon-animatable {
 }
 
 /*** Resume ***/
-#resume-page {
-  padding-top: 17px;
+#resume-page .updated-date {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  font-size: small;
+  color: #ccc;
+  display: flex;
+  justify-content: flex-end;
 }
 #resume-page .header {
   cursor: pointer;
@@ -140,7 +145,6 @@ neon-animatable {
 }
 #resume-page > div {
   padding-bottom: 70px;
-  border-top: 1px solid #ccc;
 }
 #resume-page .header:hover h2 {
   color: #03A9F4;
