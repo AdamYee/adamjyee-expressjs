@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 body {
+  margin: 0;
   font-family: 'Open Sans', sans-serif;
 }
 body, h3 {
@@ -11,6 +12,9 @@ h3 {
 neon-animatable {
   max-width: 800px;
   margin: 0 auto;
+}
+neon-animatable > div {
+  padding: 0 15px;
 }
 .paper-header {
   padding: 0 15px;
@@ -31,7 +35,9 @@ neon-animatable {
   padding-top: 25%
 }
 #marque {
+  z-index: 1;
   font-size: 27px;
+  color: white;
   letter-spacing: -1px;
   position: absolute;
   left: 2%;
@@ -77,6 +83,11 @@ neon-animatable {
 }
 #contact-page {
   margin-top: 3%;
+}
+#contact-page > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 #linkedin {
   width: 100px;
@@ -126,7 +137,7 @@ neon-animatable {
 /*** Resume ***/
 #resume-page .updated-date {
   border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+  padding: 10px 0;
   font-size: small;
   color: #ccc;
   display: flex;
