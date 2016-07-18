@@ -15,7 +15,7 @@ block content
             div.line-container
             span.font-size-x-small.margin-left-5 #{articles[i].date}
 
-  script(src='/javascripts/bower_components/jquery/jquery.js')
+  script(src='/javascripts/bower_components/jquery/dist/jquery.min.js')
   script(src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js")
   script.
     var lines = $('.line-container');
@@ -29,7 +29,7 @@ block content
       var paper = Snap("#line" + i);
       var l = paper.line(0, 0, 0, 0);
       l.attr({
-        stroke: '#bbb',
+        stroke: '#777',
         fill: 'transparent'
       });
       setTimeout(function() {

@@ -1,0 +1,145 @@
+h2 Combining Express With Generators
+
+span.font-size-x-small 2016-07-16
+
+p.
+  TL;DR – Combining Express best practices with Generators (and Promises)
+  helps keep your code clean and simplifies error handling. Have a look at
+  <a class="link" href="https://www.npmjs.com/package/co-express"><code>co-express</code></a>.
+  The following code examples illustrate
+  <a class="link" href="http://samnewman.io/patterns/architectural/bff/">service aggregating patterns</a>
+  for Express servers.
+
+div.line
+
+p.
+  Most of my professional work for the past year has been writing Node.js using Express.
+  Each server I've written is a service aggregator. Some folks are calling it a
+  <a class="link" href="http://samnewman.io/patterns/architectural/bff/">BFF</a>,
+  but it's just a proxy. So no DB queries, just bunches of network requests mapped, transformed
+  and aggregated to client facing routes.
+
+h3 Learnings about error handling
+p.
+  Before mentioning generators – a little background. One of my first mistakes
+  was trying to handle errors on a per route basis. Basically, not understanding Express
+  <a class="link" href="http://expressjs.com/en/guide/error-handling.html">error handling middleware</a>
+  and overlooking the right patterns. Here's an example of the anti-pattern.
+
+pre
+  code.block.
+    router.get('/timesheets', (req, res) => {
+      getTimesheets() /* this is a Promise */
+        .then(timesheets => {
+          const response = doSomeTransform(timesheets);
+          res.json(response);
+        })
+        .catch(onError); /* <- anti-pattern */
+    });
+
+p.
+  Using an error handler callback for <code>catch</code> means I'll probably need
+  to implement it inside all my routes. Properly piping to a router error handler
+  or a smart global error handler removes the need to manually catch and explicitly handle errors.
+  Instead, catch and pass the error to Express error handling middleware using <code>next</code>.
+
+pre
+  code.block.
+    router.get('/timesheets', (req, res, next) => {
+      getTimesheets() /* this is a Promise */
+        .then(timesheets => {
+          const response = doSomeTransform(timesheets);
+          res.json(response);
+        })
+        .catch(next); /* better pattern */
+    });    
+
+h3 Callbacks < Synchronous code
+
+p.
+  Callbacks suck. If you can avoid them, you should! Promises have been a saving grace
+  for asynchronous code, but more recent Generator patterns (combined with Promises) are
+  even better. I'm not going to explain it all, so please checkout
+  <a class="link" href="https://www.npmjs.com/package/co"><code>co</code></a>
+  and
+  <a class="link" href="https://www.npmjs.com/package/co-express"><code>co-express</code></a>.
+  Using <code>co-express</code>, I can treat all network requests synchronously.
+  As a simple example, here's a group of GET requests handled in a synchronous fassion.
+
+pre
+  code.block.
+    const wrap = require('co-express');
+
+    router.get('/dashboard', wrap(function *(req, res) {
+      /* three Promise GET requests made in parallel */
+      const data = yield {
+        myDetails: getUser(),
+        myTimesheets: getTimesheets(),
+        myPaystubs: getPaystubs()
+      };
+      const response = doSomeTransform(data);
+      res.json(response);
+    }));
+
+p.
+  The above <code>yield</code> statement will block execution and continue after
+  all three requests have been resolved. Here is a more meaningful example that
+  requires data to be fetched in sequence.
+
+pre
+  code.block.
+    const wrap = require('co-express');
+    
+    router.get('/list-of-managers', wrap(function *(req, res) {
+      /* first, fetch a list of manager ids */
+      const managerIds = yield getManagerIds();
+      /* second, map each id to a user get request */ 
+      const listOfManagers = yield managerIds.map(id => getUserById(id));
+      res.json(listOfManagers);
+    });
+
+h3 What about error handling?
+
+p.
+  This is my favorite part. <code>co-express</code> does a little magic for us by automatically
+  catching exceptions thrown inside the generator function and passing them to Express's error handling middleware.
+  In other words, there's no need to <code>try/catch</code> unless there's an exception you would like
+  to handle in a special way. I didn't actually realize this until I had a look at the
+  <a class="link" href="https://github.com/mciparelli/co-express/blob/master/index.js">source code</a>.
+  Here is <code>co-express</code> in its entirety.
+
+pre
+  code.block.
+    var co = require('co');
+
+    module.exports = function wrap(gen) {
+      var fn = co.wrap(gen);
+
+      if (gen.length === 4) {
+        return function(err, req, res, next) {
+          return fn(err, req, res, next).catch(next);
+        }
+      }
+
+      return function(req, res, next) {
+        return fn(req, res, next).catch(next);
+      };
+    };
+
+p.
+  This now comes full circle with the best practice of using <code>next</code> to pass exceptions.
+  I find this pattern of combining Express and Generators to be better in code readability and re-usability.
+  As far as I can tell,
+  <a class="link" href="http://koajs.com/"><code>koa</code></a>
+  is the generator version of Express. <code>co-express</code> is essentially turning Express into 
+  <code>koa</code>, which feels like a natural next step.
+
+
+
+
+
+
+
+
+
+
