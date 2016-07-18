@@ -17,6 +17,10 @@ block content
   
   script(src='/javascripts/bower_components/jquery/dist/jquery.min.js')
   script.
+    /**
+     * mobile detection
+     */
+    var _isMobile = screen.width <= 480;
     $(function() {
       // fetch blog content
       var regex = /\d{4}-\d{2}-\d{2}_.*/;
@@ -34,13 +38,15 @@ block content
         var title = articleContent.split('_')[1].replace(/\-/g, ' ');
         var hiddenTitle = $('#hidden-title');
         hiddenTitle.text(title);
-        var scrollHandler = function(e) {
-          if(window.scrollY > 80) {
-            hiddenTitle.fadeIn(75);
-          } else {
-            hiddenTitle.fadeOut(75);
-          }
-        };
-        $(window).scroll(scrollHandler);
+        if(!_isMobile) {
+          var scrollHandler = function(e) {
+            if(window.scrollY > 80) {
+              hiddenTitle.fadeIn(75);
+            } else {
+              hiddenTitle.fadeOut(75);
+            }
+          };
+          $(window).scroll(scrollHandler);
+        }
       });
     });
