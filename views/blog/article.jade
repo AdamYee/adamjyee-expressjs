@@ -2,24 +2,45 @@ extends ../extends/analytics-wrapper.jade
 
 block head
   include ../include/blog-head.jade
+  link(rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/tomorrow.min.css")
+  script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js")
 
 block content
   include ../include/blog-nav.jade
 
   main.max-width-800.margin-auto
+    h2#hidden-title  
     article#article.padding-sides-15
     
     a(class="muut" href="https://muut.com/i/adamjyee/comments" type="dynamic")
     script(src="//cdn.muut.com/1/moot.min.js")
   
-  script(src='/javascripts/bower_components/jquery/jquery.js')
+  script(src='/javascripts/bower_components/jquery/dist/jquery.min.js')
   script.
     $(function() {
+      // fetch blog content
       var regex = /\d{4}-\d{2}-\d{2}_.*/;
       var articleContent = window.location.pathname.match(regex)[0];
       $.ajax('/blog/article/' + articleContent).then(function(response) {
         var div = document.createElement('div');
         div.innerHTML = response;
         $('#article').append(div);
+
+        // code syntax highlighting
+        $('pre > code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        var title = articleContent.split('_')[1].replace(/\-/g, ' ');
+        var hiddenTitle = $('#hidden-title');
+        hiddenTitle.text(title);
+        var scrollHandler = function(e) {
+          if(window.scrollY > 80) {
+            hiddenTitle.fadeIn(75);
+          } else {
+            hiddenTitle.fadeOut(75);
+          }
+        };
+        $(window).scroll(scrollHandler);
       });
     });

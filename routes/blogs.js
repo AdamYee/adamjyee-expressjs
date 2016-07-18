@@ -11,7 +11,8 @@ router.get('/blog', (req, res) => {
     const regex = /\d{4}-\d{2}-\d{2}_?[\w\d-]*/;
     articles = articles.map(a => {
       const path = a.match(regex)[0];
-      const articleName = path.split('_')[1].replace('-', ' ');
+      const articleName = path.split('_')[1].replace(/\-/g, ' ');
+      console.log(articleName);
       return {
         date: path.split('_')[0],
         path,
