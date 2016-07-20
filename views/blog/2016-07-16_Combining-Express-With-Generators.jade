@@ -63,6 +63,11 @@ p.
   <a class="link" href="https://www.npmjs.com/package/co"><code>co</code></a>
   and
   <a class="link" href="https://www.npmjs.com/package/co-express"><code>co-express</code></a>.
+  Read up on
+  <a class="link" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">Generators</a>
+  if you need to as well.
+
+p.
   Using <code>co-express</code>, I can treat all network requests synchronously.
   As a simple example, here's a group of GET requests handled in a synchronous fassion.
 
@@ -129,10 +134,12 @@ pre
 p.
   This now comes full circle with the best practice of using <code>next</code> to pass exceptions.
   I find this pattern of combining Express and Generators to be better in code readability and re-usability.
+
+p.
   As far as I can tell,
   <a class="link" href="http://koajs.com/"><code>koa</code></a>
-  is the generator version of Express. <code>co-express</code> is essentially turning Express into 
-  <code>koa</code>, which feels like a natural next step.
+  is the generator version of Express. Using <code>co-express</code> gets us half-way to building
+  <code>koa</code> applications, which feels like a natural next step.
 
 
 
