@@ -20,12 +20,15 @@ block head
   link(rel='import' href='javascripts/bower_components/paper-button/paper-button.html')
   link(rel='import' href='javascripts/bower_components/paper-spinner/paper-spinner.html')
   link(rel='stylesheet' href='stylesheets/index.css' shim-shadowdom)
-  script(src='javascripts/bower_components/jquery/dist/jquery.min.js')
   script(src='javascripts/bower_components/director/build/director.min.js')
+  script(src='javascripts/bower_components/jquery/dist/jquery.min.js')
   style(is='custom-style').
     paper-tab a {
       color: #fff;
       text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     paper-tab::shadow .tab-content:hover {
       cursor: pointer;
@@ -50,45 +53,48 @@ block content
     iron-ajax(id="ajax-code" url='code' handle-as='text' on-response='parseResponse')
     iron-ajax(id="ajax-resume" url='resume' handle-as='text' on-response='parseResponse')
 
-    paper-header-panel.flex(mode='seamed')
+    span#spacer
+    div#marque
+      a(href='#/about') {{marqueName}}
+      div Full Stack Developer
+      div Xero
+
+    paper-header-panel.flex(mode='seam')
       div.paper-header.layout.horizontal
 
         paper-tabs#tabs.flex(selected='{{selectedTab}}' noink no-slide align)
           paper-tab
-            a.horizontal.center-center.layout(href='#/about') About
+            a(href='#/about')
+              span About
           paper-tab
-            a.horizontal.center-center.layout(href='#/blog') Blog
+            a(href='#/blog') 
+              span Blog
           paper-tab
-            a.horizontal.center-center.layout(href='#/code') Code
+            a(href='#/code') 
+              span Code
           paper-tab
-            a.horizontal.center-center.layout(href='#/contact') Contact
+            a(href='#/contact') 
+              span Contact
           paper-tab
-            a.horizontal.center-center.layout(href='#/resume') Resume
+            a(href='#/resume') 
+              span Resume
 
-        span#spacer
-        div#marque
-          a(href='#/about') {{marqueName}}
-          div Full Stack Developer
-          div Xero
+    neon-animated-pages(selected='[[selectedTab]]' entry-animation='fade-in-animation' exit-animation='fade-out-animation')
 
-      neon-animated-pages(selected='[[selectedTab]]' entry-animation='fade-in-animation' exit-animation='fade-out-animation')
+      neon-animatable#about-page
 
-        neon-animatable#about-page
+      neon-animatable#blog-page
 
-        neon-animatable#blog-page
+      neon-animatable#code-page
 
-        neon-animatable#code-page
+      neon-animatable#contact-page
+        div.fade-content.layout.horizontal
+          a#linkedin.logo-link(href="https://www.linkedin.com/pub/adam-yee/14/a25/7b0" target="_blank")
+            img(src='../images/linkedin-logo.png')
+          a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
+            img(src='../images/github_512_black.png')
 
-        neon-animatable#contact-page
-          div.fade-content.layout.horizontal
-            span(style="width: 5%;")
-            a#linkedin.logo-link(href="https://www.linkedin.com/pub/adam-yee/14/a25/7b0" target="_blank")
-              img(src='../images/linkedin-logo.png')
-            span(style="width: 8%;")
-            a#github.logo-link(href="https://github.com/AdamYee" target="_blank")
-              img(src='../images/github_512_black.png')
-
-        neon-animatable#resume-page
+      neon-animatable#resume-page
 
       #spinner-container.layout.horizontal.center-justified
         paper-spinner.green(active?='{{loading}}' role='progress-bar')
@@ -173,9 +179,9 @@ block content
           }
           if(template.closedSections === 4) {
             template.showhide = true;
-            $('#showhide > paper-material').text('show all');
+            $('#showhide').text('show all');
           } else if(!template.closedSections) {
-            $('#showhide > paper-material').text('hide all');
+            $('#showhide').text('hide all');
             template.showhide = false;
           }
         });
@@ -196,9 +202,9 @@ block content
         template.closedSections = template.showhide ? 0 : 4
         template.showhide = !template.showhide;
         if(template.showhide)
-          $('#showhide > paper-material').text('show all');
+          $('#showhide').text('show all');
         else
-          $('#showhide > paper-material').text('hide all');
+          $('#showhide').text('hide all');
       });
     });
 
